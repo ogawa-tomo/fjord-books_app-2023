@@ -15,12 +15,12 @@
       <% if user_signed_in? %>
         <%= t('common.logged_in_as', name: current_user.email) %>
         <%= link_to t('common.edit_profile'), edit_user_registration_path, class: 'navbar-link' %> |
-        <%= link_to t('common.logout'), destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'navbar-link'  %> |
+        <%= link_to t('common.logout'), destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'navbar-link' %> |
         <%= link_to t('common.home'), root_path %> |
         <%= link_to t('common.user_list'), users_path %>
       <% else %>
-        <%= link_to t('common.sign_up'), new_user_registration_path, class: 'navbar-link'  %> |
-        <%= link_to t('common.login'), new_user_session_path, class: 'navbar-link'  %>
+        <%= link_to t('common.sign_up'), new_user_registration_path, class: 'navbar-link' %> |
+        <%= link_to t('common.login'), new_user_session_path, class: 'navbar-link' %>
       <% end %>
     </p>
     <% if notice %>
