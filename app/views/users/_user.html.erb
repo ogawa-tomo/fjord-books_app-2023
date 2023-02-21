@@ -27,7 +27,7 @@
 
   <% if user.picture.attached? %>
     <p>
-      <strong>picture:</strong>
+      <strong><%= User.human_attribute_name(:picture) %>:</strong>
       <%= image_tag user.picture.variant(resize_to_limit: [500, 500]) %>
     </p>
   <% end %>
