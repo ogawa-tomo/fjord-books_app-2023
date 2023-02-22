@@ -9,9 +9,9 @@ class User < ApplicationRecord
   private
 
   def validate_picture
-    if %w[image/jpg image/jpeg image/png image/gif].exclude?(picture.blob.content_type)
-      picture.purge
-      errors.add(:base, I18n.t('activerecord.errors.user.picture.invalid_extension'))
-    end
+    return unless %w[image/jpg image/jpeg image/png image/gif].exclude?(picture.blob.content_type)
+
+    picture.purge
+    errors.add(:base, I18n.t('activerecord.errors.user.picture.invalid_extension'))
   end
 end
