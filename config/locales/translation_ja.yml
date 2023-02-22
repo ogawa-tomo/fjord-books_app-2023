@@ -16,3 +16,8 @@ ja:
         address: 住所
         self_introduction: 自己紹介文
         picture: 画像
+    
+    errors:
+      user:
+        picture:
+          invalid_extension: アップロード可能な画像ファイルはjpg, png, gifのみです。
