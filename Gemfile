@@ -82,6 +82,6 @@ group :test do
 end
 
 gem 'carrierwave'
-gem 'devise', github: 'heartcombo/devise'
+gem 'devise'
 gem 'devise-i18n'
 gem 'kaminari'
