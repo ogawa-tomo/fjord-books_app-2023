@@ -9,14 +9,28 @@ class ReportsController < ApplicationController
   end
 
   def new
+    @report = current_user.reports.new
   end
 
   def edit
+  end
+
+  def create
+    @report = current_user.reports.new(report_params)
+    if @report.save
+      redirect_to report_url(@report), notice: t('controllers.common.notice_create', name: Report.model_name.human)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private
 
   def set_report
     @report = Report.find(params[:id])
+  end
+
+  def report_params
+    params.require(:report).permit(:title, :body)
   end
 end
