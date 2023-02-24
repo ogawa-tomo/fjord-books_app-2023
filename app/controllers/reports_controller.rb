@@ -33,6 +33,12 @@ class ReportsController < ApplicationController
     end
   end
 
+  def destroy
+    redirect_to report_url(@report), notice: t('controllers.report.cannot_delete_other_user_report') if @report.user != current_user
+    @report.destroy
+    redirect_to books_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+  end
+
   private
 
   def set_report
