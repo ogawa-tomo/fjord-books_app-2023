@@ -1,4 +1,4 @@
-<h1><%= Comment.model_name.human %></h1>
+<h1><%= t('views.common.title_index', name: i18n_pluralize(Comment.model_name.human)) %></h1>
 
 <% comments.each do |comment| %>
   <div class="show-item">
@@ -21,5 +21,28 @@
       <strong><%= Comment.human_attribute_name(:created_at) %>:</strong>
       <%= comment.created_at %>
     </p>
+  </div>
+<% end %>
+
+<h1><%= t('views.common.title_new', name: Comment.model_name.human.downcase) %></h1>
+
+<%= form_with model: comment do |form| %>
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :commentable_type, value: commentable_type %>
+  <%= form.hidden_field :commentable_id, value: commentable_type %>
+  <%= form.hidden_field :commentable_id, value: commentable_obj.id %>
+
+  <div>
+    <%= form.submit %>
   </div>
 <% end %>

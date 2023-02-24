@@ -15,4 +15,4 @@
   <% end %>
 </nav>
 
-<%= render 'comments/index', comments: @comments %>
+<%= render 'comments/index', comments: @comments, comment: Comment.new, commentable_type: 'Report', commentable_obj: @report %>
