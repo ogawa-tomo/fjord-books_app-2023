@@ -210,6 +210,8 @@ ja:
     report:
       cannot_edit_other_user_report: '他人の日報は編集できません。'
       cannot_delete_other_user_report: '他人の日報は削除できません。'
+    comment:
+      cannot_delete_other_user_comment: '他人のコメントは削除できません。'
   layouts:
     application:
       menu: メニュー

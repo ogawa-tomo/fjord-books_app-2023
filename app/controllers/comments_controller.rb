@@ -23,6 +23,28 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    if @comment.user != current_user
+      if @comment.commentable_type == 'Book'
+        redirect_to book_url(@comment.commentable), notice: t('controllers.report.cannot_delete_other_user_comment')
+      elsif @comment.commentable_type == 'Report'
+        redirect_to report_url(@comment.commentable), notice: t('controllers.report.cannot_delete_other_user_comment')
+      else
+        redirect_to root_url
+      end
+    end
+    commentable = @comment.commentable
+    @comment.destroy
+    if @comment.commentable_type == 'Book'
+      redirect_to book_url(commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
+    elsif @comment.commentable_type == 'Report'
+      redirect_to report_url(commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
+    else
+      redirect_to root_url
+    end
+  end
+
   private
 
   def comment_params

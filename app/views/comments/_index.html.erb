@@ -21,6 +21,10 @@
       <strong><%= Comment.human_attribute_name(:created_at) %>:</strong>
       <%= comment.created_at %>
     </p>
+    
+    <% if current_user == comment.user %>
+      <p><%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), comment, method: :delete %></p>
+    <% end %>
   </div>
 <% end %>
 
