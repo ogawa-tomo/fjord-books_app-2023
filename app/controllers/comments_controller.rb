@@ -5,43 +5,20 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      if @comment.commentable_type == 'Book'
-        redirect_to book_url(@comment.commentable), notice: t('controllers.common.notice_create', name: Comment.model_name.human)
-      elsif @comment.commentable_type == 'Report'
-        redirect_to report_url(@comment.commentable), notice: t('controllers.common.notice_create', name: Comment.model_name.human)
-      else
-        redirect_to root_url
-      end
+      redirect_to commentable_url(@comment), notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
-      if @comment.commentable_type == 'Book'
-        redirect_to book_url(@comment.commentable), status: :unprocessable_entity
-      elsif @comment.commentable_type == 'Report'
-        redirect_to report_url(@comment.commentable), status: :unprocessable_entity
-      else
-        redirect_to root_url, status: :unprocessable_entity
-      end
+      redirect_to commentable_url(@comment), status: :unprocessable_entity
     end
   end
 
   def destroy
     @comment = Comment.find(params[:id])
-    if @comment.user != current_user
-      if @comment.commentable_type == 'Book'
-        redirect_to book_url(@comment.commentable), notice: t('controllers.report.cannot_delete_other_user_comment')
-      elsif @comment.commentable_type == 'Report'
-        redirect_to report_url(@comment.commentable), notice: t('controllers.report.cannot_delete_other_user_comment')
-      else
-        redirect_to root_url
-      end
-    end
-    commentable = @comment.commentable
-    @comment.destroy
-    if @comment.commentable_type == 'Book'
-      redirect_to book_url(commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
-    elsif @comment.commentable_type == 'Report'
-      redirect_to report_url(commentable), notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
+    if @comment.user == current_user
+      url = commentable_url(@comment)
+      @comment.destroy
+      redirect_to url, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)   
     else
-      redirect_to root_url
+      redirect_to commentable_url(@comment), notice: t('controllers.comment.cannot_delete_other_user_comment')
     end
   end
 
@@ -49,5 +26,15 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:title, :body, :user_id, :commentable_type, :commentable_id)
+  end
+
+  def commentable_url(comment)
+    if comment.commentable_type == 'Book'
+      book_url(comment.commentable)
+    elsif comment.commentable_type == 'Report'
+      report_url(comment.commentable)
+    else
+      raise
+    end
   end
 end
