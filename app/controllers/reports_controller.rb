@@ -7,6 +7,7 @@ class ReportsController < ApplicationController
 
   def show
     @comments = @report.comments.order(:created_at, :id)
+    @comment = @report.comments.build
   end
 
   def new

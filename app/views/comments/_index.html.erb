@@ -23,30 +23,7 @@
     </p>
     
     <% if current_user == comment.user %>
-      <p><%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), comment, method: :delete %></p>
+      <p><%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([commentable, comment]), method: :delete %></p>
     <% end %>
-  </div>
-<% end %>
-
-<h1><%= t('views.common.title_new', name: Comment.model_name.human.downcase) %></h1>
-
-<%= form_with model: comment do |form| %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.text_area :body %>
-  </div>
-
-  <%= form.hidden_field :user_id, value: current_user.id %>
-  <%= form.hidden_field :commentable_type, value: commentable_type %>
-  <%= form.hidden_field :commentable_id, value: commentable_type %>
-  <%= form.hidden_field :commentable_id, value: commentable_obj.id %>
-
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>
