@@ -6,7 +6,7 @@
       <strong><%= Comment.human_attribute_name(:user) %>:</strong>
       <%= comment.user ? [comment.user.name, comment.user.email].find(&:present?) : t('views.common.deleted_user') %>
     </p>
-    
+
     <p>
       <strong><%= Comment.human_attribute_name(:title) %>:</strong>
       <%= comment.title %>
@@ -21,7 +21,7 @@
       <strong><%= Comment.human_attribute_name(:created_at) %>:</strong>
       <%= comment.created_at %>
     </p>
-    
+
     <% if current_user == comment.user %>
       <p><%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([commentable, comment]), method: :delete %></p>
     <% end %>
