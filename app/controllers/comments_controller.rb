@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-
   def create
     comment = commentable.comments.build(comment_params)
     if comment.save
@@ -15,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.user == current_user
       @comment.destroy
-      redirect_to commentable, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)   
+      redirect_to commentable, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
     else
       redirect_to commentable, notice: t('controllers.comment.cannot_delete_other_user_comment')
     end
