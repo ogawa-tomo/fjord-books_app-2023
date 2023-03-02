@@ -4,7 +4,7 @@
   <div class="show-item">
     <p>
       <strong><%= Comment.human_attribute_name(:user) %>:</strong>
-      <%= [comment.user.name, comment.user.email].find(&:present?) %>
+      <%= comment.user ? [comment.user.name, comment.user.email].find(&:present?) : t('views.common.deleted_user') %>
     </p>
     
     <p>
