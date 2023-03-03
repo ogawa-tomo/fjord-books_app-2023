@@ -9,3 +9,11 @@ ja:
         memo: メモ
         picture: 画像
         title: タイトル
+  common:
+    edit_profile: プロフィール編集
+    logout: ログアウト
+    home: ホーム
+    user_list: ユーザー一覧
+    logged_in_as: "%{name}でログイン中"
+    sign_up: サインアップ
+    login: ログイン
