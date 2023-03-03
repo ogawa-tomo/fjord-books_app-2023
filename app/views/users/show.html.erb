@@ -1,13 +1,7 @@
-<h1><%= @user.name %>のプロフィール</h1>
-<h2>ユーザー名</h2>
-<p><%= @user.name %></p>
-<h2>メールアドレス</h2>
-<p><%= @user.email %></p>
-<h2>郵便番号</h2>
-<p><%= @user.postal_code %></p>
-<h2>住所</h2>
-<p><%= @user.address %></p>
-<h2>自己紹介</h2>
-<p><%= @user.self_introduction %></p>
+<div class="show-item">
+  <%= render @user %>
+</div>
 
-<p><%= link_to 'ユーザー一覧に戻る', users_path %></p>
+<nav class="page-nav">
+  <%= link_to t('views.common.back', name: i18n_pluralize(User.model_name.human.downcase)), users_path %>
+</nav>
