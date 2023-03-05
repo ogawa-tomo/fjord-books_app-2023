@@ -21,6 +21,8 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
 
+    create_mentioning_to
+
     if @report.save
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
@@ -29,6 +31,8 @@ class ReportsController < ApplicationController
   end
 
   def update
+    create_mentioning_to
+
     if @report.update(report_params)
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
@@ -50,5 +54,13 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
+  end
+
+  def create_mentioning_to
+    report_urls = @report.content.scan(/http:\/\/localhost:3000\/reports\/\d+/)
+    report_ids = report_urls.map { |url| url.match(/\/reports\//).post_match }.map(&:to_i)
+    report_ids.each do |report_id|
+      @report.mentioning_to.create!(mentioned_report_id: report_id)
+    end
   end
 end
