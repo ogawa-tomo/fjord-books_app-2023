@@ -20,24 +20,24 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(report_params)
-
-    if @report.save
-      create_mentioning_to
-      redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
-    else
-      render :new, status: :unprocessable_entity
+    ApplicationRecord.transaction do
+      @report.save!
+      create_mentioning_to!
     end
+    redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
+  rescue
+    render :new, status: :unprocessable_entity
   end
 
   def update
-    @report.mentioning_to.clear
-
-    if @report.update(report_params)
-      create_mentioning_to
-      redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
-    else
-      render :edit, status: :unprocessable_entity
+    ApplicationRecord.transaction do
+      @report.mentioning_to.clear
+      @report.update!(report_params)
+      create_mentioning_to!
     end
+    redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
+  rescue
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
     params.require(:report).permit(:title, :content)
   end
 
-  def create_mentioning_to
+  def create_mentioning_to!
     report_urls = @report.content.scan(/http:\/\/localhost:3000\/reports\/\d+/).uniq
     report_ids = report_urls.map { |url| url.match(/\/reports\//).post_match }.map(&:to_i)
     report_ids.each do |report_id|
