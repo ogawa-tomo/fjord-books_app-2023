@@ -57,7 +57,7 @@ class ReportsController < ApplicationController
   end
 
   def create_mentioning_to
-    report_urls = @report.content.scan(/http:\/\/localhost:3000\/reports\/\d+/)
+    report_urls = @report.content.scan(/http:\/\/localhost:3000\/reports\/\d+/).uniq
     report_ids = report_urls.map { |url| url.match(/\/reports\//).post_match }.map(&:to_i)
     report_ids.each do |report_id|
       @report.mentioning_to.create!(mentioned_report_id: report_id)
