@@ -10,7 +10,7 @@ class Report < ApplicationRecord
   has_many :mentioned_from, class_name: 'ReportMentionRelationship', foreign_key: :mentioned_report_id
   has_many :mentioned_reports, through: :mentioned_from, source: :mentioning_report
 
-  has_many :mentioning_to, class_name: 'ReportMentionRelationship', foreign_key: :mentioning_report_id
+  has_many :mentioning_to, class_name: 'ReportMentionRelationship', foreign_key: :mentioning_report_id, dependent: :destroy
   has_many :mentioning_reports, through: :mentioning_to, source: :mentioned_report
 
   def editable?(target_user)
