@@ -20,4 +20,13 @@ class Report < ApplicationRecord
   def created_on
     created_at.to_date
   end
+
+  def create_mentioning_to!
+    self.mentioning_to.clear
+    report_urls = self.content.scan(%r{http://localhost:3000/reports/\d+}).uniq
+    report_ids = report_urls.map { |url| url.match(%r{/reports/}).post_match }.map(&:to_i)
+    report_ids.each do |report_id|
+      self.mentioning_to.create!(mentioned_report_id: report_id)
+    end
+  end
 end
