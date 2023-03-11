@@ -196,6 +196,7 @@ ja:
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
       title_show: "%{name}の詳細"
       sign_out: ログアウト
+      deleted_user: 削除されたユーザー
     pagination:
       first: '« 最初'
       last: '最後 »'
@@ -207,6 +208,11 @@ ja:
       notice_create: "%{name}が作成されました。"
       notice_update: "%{name}が更新されました。"
       notice_destroy: "%{name}が削除されました。"
+    report:
+      cannot_edit_other_user_report: '他人の日報は編集できません。'
+      cannot_delete_other_user_report: '他人の日報は削除できません。'
+    comment:
+      cannot_delete_other_user_comment: '他人のコメントは削除できません。'
   layouts:
     application:
       menu: メニュー

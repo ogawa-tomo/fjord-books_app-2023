@@ -1,0 +1,29 @@
+<h1><%= t('views.common.title_index', name: i18n_pluralize(Comment.model_name.human)) %></h1>
+
+<% comments.each do |comment| %>
+  <div class="show-item">
+    <p>
+      <strong><%= Comment.human_attribute_name(:user) %>:</strong>
+      <%= comment.user ? [comment.user.name, comment.user.email].find(&:present?) : t('views.common.deleted_user') %>
+    </p>
+
+    <p>
+      <strong><%= Comment.human_attribute_name(:title) %>:</strong>
+      <%= comment.title %>
+    </p>
+
+    <p>
+      <strong><%= Comment.human_attribute_name(:body) %>:</strong>
+      <%= comment.body %>
+    </p>
+
+    <p>
+      <strong><%= Comment.human_attribute_name(:created_at) %>:</strong>
+      <%= comment.created_at %>
+    </p>
+
+    <% if current_user == comment.user %>
+      <p><%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([commentable, comment]), method: :delete %></p>
+    <% end %>
+  </div>
+<% end %>

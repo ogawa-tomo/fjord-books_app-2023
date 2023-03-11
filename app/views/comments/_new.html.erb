@@ -1,0 +1,18 @@
+<h1><%= t('views.common.title_new', name: Comment.model_name.human.downcase) %></h1>
+
+<%= form_with model: [commentable, comment] do |form| %>
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body, required: true %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
