@@ -5,6 +5,7 @@ cherry_book:
   memo: 名著ですね！！！
   author: jnchito
 
-# two:
-#   title: MyString
-#   memo: MyText
+tractatus:
+  title: 論理哲学論考
+  memo: 歴史的名著
+  author: Ludwig Wittgenstein
