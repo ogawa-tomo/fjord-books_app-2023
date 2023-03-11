@@ -13,6 +13,8 @@ class Report < ApplicationRecord
   has_many :mentioning_to, class_name: 'ReportMentionRelationship', foreign_key: :mentioning_report_id, dependent: :destroy, inverse_of: 'mentioning_report'
   has_many :mentioning_reports, through: :mentioning_to, source: :mentioned_report
 
+  after_save :create_mentioning_to
+
   def editable?(target_user)
     user == target_user
   end
@@ -21,7 +23,9 @@ class Report < ApplicationRecord
     created_at.to_date
   end
 
-  def create_mentioning_to!
+  private
+
+  def create_mentioning_to
     self.mentioning_to.clear
     report_urls = self.content.scan(%r{http://localhost:3000/reports/\d+}).uniq
     report_ids = report_urls.map { |url| url.match(%r{/reports/}).post_match }.map(&:to_i)
