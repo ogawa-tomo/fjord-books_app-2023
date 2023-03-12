@@ -5,7 +5,7 @@ require 'test_helper'
 class ReportTest < ActiveSupport::TestCase
   test 'editable?' do
     user = User.new(name: 'hoge', email: 'hoge@example.com')
-    report = user.reports.build()
+    report = user.reports.build
     assert report.editable?(user)
 
     user2 = User.new(name: 'fuga', email: 'fuga@example.com')
