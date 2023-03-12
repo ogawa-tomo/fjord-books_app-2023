@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class ReportTest < ActiveSupport::TestCase
-
   test 'title should not be blank' do
     user = User.new(name: 'hoge', email: 'hoge@example.com')
     report = user.reports.build(title: '', content: 'fugafuga')
