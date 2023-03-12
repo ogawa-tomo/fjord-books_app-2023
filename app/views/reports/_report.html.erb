@@ -22,10 +22,10 @@
   <p>
     <strong><%= t('views.reports.mentioned_from') %>:</strong>
   </p>
-  <% report.mentioned_reports.each do |report| %>
-    <ul>
+  <ul>
+    <% report.mentioned_reports.each do |report| %>
       <li><%= link_to report.title, report %></li>
-    </ul>
-  <% end %>
+    <% end %>
+  </ul>
 
 </div>
