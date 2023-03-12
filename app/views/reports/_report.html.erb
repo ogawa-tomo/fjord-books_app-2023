@@ -19,4 +19,13 @@
     <%= l report.created_on %>
   </p>
 
+  <p>
+    <strong><%= t('views.reports.mentioned_from') %>:</strong>
+  </p>
+  <ul>
+    <% report.mentioned_reports.each do |report| %>
+      <li><%= link_to report.title, report %></li>
+    <% end %>
+  </ul>
+
 </div>
