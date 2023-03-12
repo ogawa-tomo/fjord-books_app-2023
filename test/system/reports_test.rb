@@ -29,11 +29,14 @@ class ReportsTest < ApplicationSystemTestCase
     visit reports_url
     click_on '日報の新規作成'
 
+    assert_selector 'h1', text: '日報の新規作成'
+
     fill_in 'タイトル', with: '自作サービスに着手'
     fill_in '内容', with: 'がんばるぞ～'
     click_on '登録する'
 
     assert_text '日報が作成されました。'
+    assert_selector 'h1', text: '日報の詳細'
 
     assert_text '自作サービスに着手'
     assert_text 'がんばるぞ～'
@@ -44,11 +47,14 @@ class ReportsTest < ApplicationSystemTestCase
     visit report_url(@report)
     click_on 'この日報を編集'
 
+    assert_selector 'h1', text: '日報の編集'
+
     fill_in 'タイトル', with: 'Sinatraの勉強を進める'
     fill_in '内容', with: '楽しくなってきた～'
     click_on '更新する'
 
     assert_text '日報が更新されました。'
+    assert_selector 'h1', text: '日報の詳細'
 
     assert_text 'Sinatraの勉強を進める'
     assert_text '楽しくなってきた～'
@@ -60,6 +66,7 @@ class ReportsTest < ApplicationSystemTestCase
     click_on 'この日報を削除'
 
     assert_text '日報が削除されました。'
+    assert_selector 'h1', text: '日報の一覧'
     assert_no_text 'Sinatraの勉強'
   end
 end

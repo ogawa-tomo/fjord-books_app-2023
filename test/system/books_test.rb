@@ -29,12 +29,15 @@ class BooksTest < ApplicationSystemTestCase
     visit books_url
     click_on '本の新規作成'
 
+    assert_selector 'h1', text: '本の新規作成'
+
     fill_in 'タイトル', with: 'Ruby超入門'
     fill_in 'メモ', with: 'わかりやす～い！'
     fill_in '著者', with: 'igaiga'
     click_on '登録する'
 
     assert_text '本が作成されました。'
+    assert_selector 'h1', text: '本の詳細'
 
     assert_text 'Ruby超入門'
     assert_text 'わかりやす～い！'
@@ -45,12 +48,15 @@ class BooksTest < ApplicationSystemTestCase
     visit book_url(@book)
     click_on 'この本を編集'
 
+    assert_selector 'h1', text: '本の編集'
+
     fill_in 'タイトル', with: 'プロを目指す人のためのRuby入門 第2版'
     fill_in 'メモ', with: 'さらに名著になった'
     fill_in '著者', with: '伊藤淳一'
     click_on '更新する'
 
     assert_text '本が更新されました'
+    assert_selector 'h1', text: '本の詳細'
 
     assert_text 'プロを目指す人のためのRuby入門 第2版'
     assert_text 'さらに名著になった'
@@ -62,6 +68,7 @@ class BooksTest < ApplicationSystemTestCase
     click_on 'この本を削除'
 
     assert_text '本が削除されました。'
+    assert_selector 'h1', text: '本の一覧'
     assert_no_text 'プロを目指す人のためのRuby入門'
   end
 end
