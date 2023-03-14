@@ -10,9 +10,11 @@ class BooksTest < ApplicationSystemTestCase
     fill_in 'Eメール', with: 'alice@example.com'
     fill_in 'パスワード', with: 'password'
     click_button 'ログイン'
+    assert_text 'ログインしました。'
   end
 
   test 'visiting the index' do
+    visit books_url
     assert_selector 'h1', text: '本の一覧'
 
     assert_text 'プロを目指す人のためのRuby入門'
@@ -25,6 +27,7 @@ class BooksTest < ApplicationSystemTestCase
   end
 
   test 'should create book' do
+    visit books_url
     click_on '本の新規作成'
 
     assert_selector 'h1', text: '本の新規作成'

@@ -10,6 +10,7 @@ class ReportsTest < ApplicationSystemTestCase
     fill_in 'Eメール', with: 'alice@example.com'
     fill_in 'パスワード', with: 'password'
     click_button 'ログイン'
+    assert_text 'ログインしました。'
   end
 
   test 'visiting the index' do
