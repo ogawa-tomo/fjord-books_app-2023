@@ -4,44 +4,70 @@ require 'application_system_test_case'
 
 class ReportsTest < ApplicationSystemTestCase
   setup do
-    @report = reports(:one)
+    @report = reports(:alice_report)
+
+    visit root_url
+    fill_in 'Eメール', with: 'alice@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    assert_text 'ログインしました。'
   end
 
   test 'visiting the index' do
     visit reports_url
-    assert_selector 'h1', text: 'Reports'
+    assert_selector 'h1', text: '日報の一覧'
+
+    assert_text 'Sinatraの勉強'
+    assert_text '難しかった～'
+    assert_text 'alice'
+
+    assert_text 'CSS初級'
+    assert_text 'やっとできた～'
+    assert_text 'bob'
   end
 
   test 'should create report' do
     visit reports_url
-    click_on 'New report'
+    click_on '日報の新規作成'
 
-    fill_in 'Content', with: @report.content
-    fill_in 'Title', with: @report.title
-    fill_in 'User', with: @report.user_id
-    click_on 'Create Report'
+    assert_selector 'h1', text: '日報の新規作成'
 
-    assert_text 'Report was successfully created'
-    click_on 'Back'
+    fill_in 'タイトル', with: '自作サービスに着手'
+    fill_in '内容', with: 'がんばるぞ～'
+    click_on '登録する'
+
+    assert_text '日報が作成されました。'
+    assert_selector 'h1', text: '日報の詳細'
+
+    assert_text '自作サービスに着手'
+    assert_text 'がんばるぞ～'
+    assert_text 'alice'
   end
 
   test 'should update Report' do
     visit report_url(@report)
-    click_on 'Edit this report', match: :first
+    click_on 'この日報を編集'
 
-    fill_in 'Content', with: @report.content
-    fill_in 'Title', with: @report.title
-    fill_in 'User', with: @report.user_id
-    click_on 'Update Report'
+    assert_selector 'h1', text: '日報の編集'
 
-    assert_text 'Report was successfully updated'
-    click_on 'Back'
+    fill_in 'タイトル', with: 'Sinatraの勉強を進める'
+    fill_in '内容', with: '楽しくなってきた～'
+    click_on '更新する'
+
+    assert_text '日報が更新されました。'
+    assert_selector 'h1', text: '日報の詳細'
+
+    assert_text 'Sinatraの勉強を進める'
+    assert_text '楽しくなってきた～'
+    assert_text 'alice'
   end
 
   test 'should destroy Report' do
     visit report_url(@report)
-    click_on 'Destroy this report', match: :first
+    click_on 'この日報を削除'
 
-    assert_text 'Report was successfully destroyed'
+    assert_text '日報が削除されました。'
+    assert_selector 'h1', text: '日報の一覧'
+    assert_no_text 'Sinatraの勉強'
   end
 end

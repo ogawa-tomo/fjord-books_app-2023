@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user: one
-  title: MyString
-  content: MyText
+alice_report:
+  user: alice
+  title: Sinatraの勉強
+  content: 難しかった～
 
-two:
-  user: two
-  title: MyString
-  content: MyText
+bob_report:
+  user: bob
+  title: CSS初級
+  content: やっとできた～
